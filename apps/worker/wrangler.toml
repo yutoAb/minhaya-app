@@ -1,0 +1,12 @@
+name = "minhaya-worker"
+main = "src/index.ts"
+compatibility_date = "2026-02-19"
+
+[durable_objects]
+bindings = [
+  { name = "ROOM", class_name = "Room" }
+]
+
+[[migrations]]
+new_sqlite_classes = ["Room"]
+tag = "v1"

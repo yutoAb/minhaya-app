@@ -1,0 +1,14 @@
+{
+  "name": "minhaya-app",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:web": "npm --workspace @minhaya/web run dev",
+    "dev:worker": "npm --workspace @minhaya/worker run dev",
+    "build": "npm run build -ws",
+    "typecheck": "npm run typecheck -ws"
+  }
+}
