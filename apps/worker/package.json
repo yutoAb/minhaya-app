@@ -1,0 +1,20 @@
+{
+  "name": "@minhaya/worker",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@minhaya/shared": "0.0.1",
+    "hono": "^4.8.2"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260208.0",
+    "typescript": "^5.8.2",
+    "wrangler": "^4.11.1"
+  }
+}

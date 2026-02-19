@@ -1,0 +1,152 @@
+[
+  {
+    "id": "jp-pm-1",
+    "question": "現在の日本の内閣制度で、首相が任命するのは次のうちどれ？",
+    "choices": { "A": "最高裁判所長官", "B": "天皇", "C": "都道府県知事", "D": "衆議院議長" },
+    "answer": "A",
+    "explanation": "内閣総理大臣は最高裁判所長官を指名し、天皇が任命します。",
+    "source_url": "https://www.kantei.go.jp/",
+    "category": "日本政治",
+    "difficulty": 2
+  },
+  {
+    "id": "jp-diet-1",
+    "question": "日本の国会は何院制？",
+    "choices": { "A": "一院制", "B": "二院制", "C": "三院制", "D": "四院制" },
+    "answer": "B",
+    "explanation": "衆議院と参議院からなる二院制です。",
+    "source_url": "https://www.sangiin.go.jp/",
+    "category": "日本政治",
+    "difficulty": 1
+  },
+  {
+    "id": "jp-election-1",
+    "question": "衆議院議員の任期は原則何年？",
+    "choices": { "A": "2年", "B": "3年", "C": "4年", "D": "6年" },
+    "answer": "C",
+    "explanation": "衆議院議員の任期は4年ですが、解散により満了前に終了することがあります。",
+    "source_url": "https://www.soumu.go.jp/senkyo/",
+    "category": "選挙",
+    "difficulty": 1
+  },
+  {
+    "id": "jp-election-2",
+    "question": "参議院議員の任期は何年？",
+    "choices": { "A": "4年", "B": "5年", "C": "6年", "D": "8年" },
+    "answer": "C",
+    "explanation": "参議院議員の任期は6年で、3年ごとに半数改選です。",
+    "source_url": "https://www.sangiin.go.jp/",
+    "category": "選挙",
+    "difficulty": 1
+  },
+  {
+    "id": "jp-law-1",
+    "question": "法律案が成立するために必要なのは？",
+    "choices": { "A": "内閣の全会一致", "B": "国会の議決", "C": "最高裁の許可", "D": "地方議会の同意" },
+    "answer": "B",
+    "explanation": "法律は国会の議決で成立します。",
+    "source_url": "https://www.shugiin.go.jp/",
+    "category": "立法",
+    "difficulty": 2
+  },
+  {
+    "id": "jp-budget-1",
+    "question": "予算の先議権を持つのはどちらの院？",
+    "choices": { "A": "衆議院", "B": "参議院", "C": "両院同時", "D": "内閣" },
+    "answer": "A",
+    "explanation": "憲法で予算は衆議院に先に提出されると定められています。",
+    "source_url": "https://www.shugiin.go.jp/",
+    "category": "財政",
+    "difficulty": 2
+  },
+  {
+    "id": "jp-cabinet-1",
+    "question": "内閣不信任決議が可決された場合、内閣が行うべき対応は？",
+    "choices": { "A": "直ちに総辞職", "B": "10日以内に衆議院解散か総辞職", "C": "参議院に再審議依頼", "D": "何もしなくてよい" },
+    "answer": "B",
+    "explanation": "10日以内に衆議院解散しない場合、内閣は総辞職しなければなりません。",
+    "source_url": "https://www.kantei.go.jp/",
+    "category": "内閣",
+    "difficulty": 3
+  },
+  {
+    "id": "jp-constitution-1",
+    "question": "日本国憲法の改正発議に必要な議員数は？",
+    "choices": { "A": "各議院の過半数", "B": "各議院の3分の2以上", "C": "国会全体の3分の2", "D": "各議院の4分の3" },
+    "answer": "B",
+    "explanation": "各議院の総議員の3分の2以上の賛成で発議されます。",
+    "source_url": "https://www.shugiin.go.jp/",
+    "category": "憲法",
+    "difficulty": 3
+  },
+  {
+    "id": "jp-local-1",
+    "question": "地方公共団体の長を選ぶ選挙を何という？",
+    "choices": { "A": "間接選挙", "B": "首長選挙", "C": "国政選挙", "D": "比例代表" },
+    "answer": "B",
+    "explanation": "都道府県知事や市区町村長を選ぶ選挙は首長選挙です。",
+    "source_url": "https://www.soumu.go.jp/",
+    "category": "地方自治",
+    "difficulty": 1
+  },
+  {
+    "id": "jp-party-1",
+    "question": "政党助成制度の財源は主に何？",
+    "choices": { "A": "寄付金", "B": "税金", "C": "国債", "D": "日銀引受" },
+    "answer": "B",
+    "explanation": "政党交付金は税金を財源として交付されます。",
+    "source_url": "https://www.soumu.go.jp/",
+    "category": "政党",
+    "difficulty": 2
+  },
+  {
+    "id": "world-un-1",
+    "question": "国連総会で各加盟国が持つ票数は原則いくつ？",
+    "choices": { "A": "人口比例", "B": "GDP比例", "C": "1国1票", "D": "地域ごとに固定" },
+    "answer": "C",
+    "explanation": "国連総会は原則として加盟国ごとに1票です。",
+    "source_url": "https://www.un.org/",
+    "category": "国際政治",
+    "difficulty": 2
+  },
+  {
+    "id": "world-us-1",
+    "question": "アメリカ連邦議会の上院議員の任期は何年？",
+    "choices": { "A": "2年", "B": "4年", "C": "6年", "D": "8年" },
+    "answer": "C",
+    "explanation": "上院議員の任期は6年で、2年ごとに約3分の1が改選されます。",
+    "source_url": "https://www.senate.gov/",
+    "category": "海外政治",
+    "difficulty": 2
+  },
+  {
+    "id": "world-uk-1",
+    "question": "イギリス議会の下院は一般に何と呼ばれる？",
+    "choices": { "A": "House of Lords", "B": "House of Commons", "C": "National Assembly", "D": "Federal Council" },
+    "answer": "B",
+    "explanation": "下院は House of Commons、上院は House of Lords です。",
+    "source_url": "https://www.parliament.uk/",
+    "category": "海外政治",
+    "difficulty": 1
+  },
+  {
+    "id": "jp-court-1",
+    "question": "違憲立法審査権を持つ日本の機関は？",
+    "choices": { "A": "国会", "B": "内閣", "C": "最高裁判所", "D": "会計検査院" },
+    "answer": "C",
+    "explanation": "最高裁判所は法律等の違憲審査を最終的に行います。",
+    "source_url": "https://www.courts.go.jp/",
+    "category": "司法",
+    "difficulty": 2
+  },
+  {
+    "id": "jp-senkyo-3",
+    "question": "日本の公職選挙法で、選挙権年齢は現在何歳以上？",
+    "choices": { "A": "18歳", "B": "19歳", "C": "20歳", "D": "21歳" },
+    "answer": "A",
+    "explanation": "2016年から選挙権年齢は18歳以上です。",
+    "source_url": "https://www.soumu.go.jp/senkyo/",
+    "category": "選挙",
+    "difficulty": 1
+  }
+]

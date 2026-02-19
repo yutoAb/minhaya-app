@@ -1,0 +1,88 @@
+:root {
+  --bg: #f4f7fb;
+  --card: #ffffff;
+  --ink: #10213b;
+  --accent: #1166cc;
+  --danger: #b42318;
+  --line: #d0d8e4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;
+  background: linear-gradient(160deg, #edf4ff 0%, #f8fbff 45%, #f5f8f1 100%);
+  color: var(--ink);
+}
+
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  margin-top: 12px;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+button,
+input {
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+button {
+  cursor: pointer;
+  background: #fff;
+}
+
+button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.choice {
+  width: 100%;
+  text-align: left;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 12px;
+}
+
+.timer {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.error {
+  color: var(--danger);
+  font-weight: 600;
+}
