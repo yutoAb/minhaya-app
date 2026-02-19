@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import type {
   ChoiceKey,
   ClientToServerEvent,
@@ -17,6 +18,8 @@ const ROUND_MS = 10_000;
 const QUESTIONS_PER_MATCH = 10;
 
 const app = new Hono<{ Bindings: Env }>();
+
+app.use("*", cors());
 
 app.post("/rooms", async (c) => {
   const code = generateCode();
