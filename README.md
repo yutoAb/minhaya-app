@@ -2,6 +2,10 @@
 
 「みんはや」風の政治クイズ 1v1 招待対戦アプリの MVP 実装です。
 
+## デモ動画
+
+[デモ動画を見る](https://drive.google.com/file/d/1ocUIQ_ZhTPwjcZhZ2ZpgJ6-hJd13n8_5/view?usp=sharing)
+
 ## 構成
 
 - `apps/web`: Next.js (静的出力) フロントエンド
