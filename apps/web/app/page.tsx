@@ -253,6 +253,32 @@ export default function Page(): JSX.Element {
             />
             <button onClick={joinRoom}>コードで参加</button>
           </div>
+          <div className="row" style={{ marginTop: 16 }}>
+            <button
+              onClick={async () => {
+                const data = await listMissedQuestions();
+                setMissedHistory(data);
+                setShowMissedHistory((prev) => !prev);
+              }}
+            >
+              {showMissedHistory ? "履歴を閉じる" : "過去の履歴を見る"}
+            </button>
+          </div>
+          {showMissedHistory && (
+            <div style={{ marginTop: 12 }}>
+              <h3>間違えた問題の履歴</h3>
+              {missedHistory.length === 0 && <p>まだ記録がありません</p>}
+              {missedHistory.map((m) => (
+                <div key={m.id} className="card" style={{ marginTop: 8 }}>
+                  <strong>{m.question_text}</strong>
+                  <p>正解: {m.correct_answer} / あなたの回答: {m.chosen_answer}</p>
+                  <p style={{ fontSize: "0.8em", opacity: 0.7 }}>
+                    {new Date(m.created_at).toLocaleString("ja-JP")}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
@@ -346,6 +372,17 @@ export default function Page(): JSX.Element {
             </div>
           ))}
 
+          <button
+            className="primary"
+            style={{ marginTop: 16 }}
+            onClick={() => {
+              wsRef.current?.close();
+              setView("home");
+              setError("");
+            }}
+          >
+            ホームに戻る
+          </button>
         </div>
       )}
     </main>
