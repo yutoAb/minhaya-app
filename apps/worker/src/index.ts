@@ -16,6 +16,7 @@ type Env = {
 const CODE_LENGTH = 6;
 const ROUND_MS = 10_000;
 const QUESTIONS_PER_MATCH = 10;
+const MAX_PLAYERS = 10;
 
 const app = new Hono<{ Bindings: Env }>();
 
@@ -228,7 +229,7 @@ export class Room implements DurableObject {
       return;
     }
 
-    if (this.state.players.length >= 2) {
+    if (this.state.players.length >= MAX_PLAYERS) {
       this.send(session.socket, { type: "error", message: "room_full" });
       return;
     }
@@ -247,7 +248,7 @@ export class Room implements DurableObject {
     await this.persist();
     this.broadcastLobby();
 
-    if (this.state.players.length === 2) {
+    if (this.state.players.length >= 2) {
       this.broadcastReady();
     }
   }
@@ -258,7 +259,7 @@ export class Room implements DurableObject {
       return;
     }
 
-    if (this.state.players.length !== 2 || !this.state.hostId) {
+    if (this.state.players.length < 2 || !this.state.hostId) {
       this.broadcastError("not_ready");
       return;
     }
@@ -310,7 +311,7 @@ export class Room implements DurableObject {
     this.broadcast({ type: "locked", index: event.index, playerId });
     await this.persist();
 
-    if (Object.keys(currentAnswers).length >= 2) {
+    if (Object.keys(currentAnswers).length >= this.state.players.length) {
       await this.finishCurrentQuestion();
     }
   }

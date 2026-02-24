@@ -289,7 +289,7 @@ export default function Page(): JSX.Element {
           </p>
           <button onClick={() => navigator.clipboard?.writeText(roomCode)}>コードをコピー</button>
           <p style={{ marginTop: 12 }}>
-            参加者: {players.length}/2
+            参加者: {players.length}/10
           </p>
           {players.map((p) => (
             <div key={p.playerId} className="row" style={{ marginTop: 6 }}>
@@ -298,7 +298,7 @@ export default function Page(): JSX.Element {
             </div>
           ))}
 
-          {players.length === 2 && selfId === hostId && (
+          {players.length >= 2 && selfId === hostId && (
             <button className="primary" onClick={sendStart} style={{ marginTop: 16 }}>
               Start
             </button>
