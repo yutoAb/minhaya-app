@@ -69,6 +69,7 @@ export type ServerToClientEvent =
       winnerId: string | null;
       scores: Record<string, number>;
       review: Array<{
+        id: string;
         index: number;
         correctChoice: ChoiceKey;
         explanation: string;

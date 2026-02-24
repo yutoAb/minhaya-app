@@ -7,6 +7,7 @@ import type {
   Player,
   ServerToClientEvent,
 } from "@minhaya/shared";
+import { addMissedQuestion, listMissedQuestions, type MissedQuestion } from "@/lib/supabase";
 
 type View = "home" | "lobby" | "match" | "result";
 
@@ -37,8 +38,12 @@ export default function Page(): JSX.Element {
   const [review, setReview] = useState<Review>([]);
   const [error, setError] = useState("");
   const [nowTs, setNowTs] = useState(Date.now());
+  const [myAnswers, setMyAnswers] = useState<Record<number, ChoiceKey>>({});
+  const [missedHistory, setMissedHistory] = useState<MissedQuestion[]>([]);
+  const [showMissedHistory, setShowMissedHistory] = useState(false);
 
   const wsRef = useRef<WebSocket | null>(null);
+  const myAnswersRef = useRef<Record<number, ChoiceKey>>({});
 
   const workerBase = useMemo(
     () => (process.env.NEXT_PUBLIC_WORKER_URL ?? defaultWorkerBase).replace(/\/$/, ""),
@@ -106,6 +111,9 @@ export default function Page(): JSX.Element {
 
   function connectAndJoin(code: string, playerName: string): void {
     wsRef.current?.close();
+    setMyAnswers({});
+    myAnswersRef.current = {};
+    setShowMissedHistory(false);
     const ws = new WebSocket(`${wsBase}/ws/${code}`);
     wsRef.current = ws;
 
@@ -181,6 +189,19 @@ export default function Page(): JSX.Element {
       setScores(event.scores);
       setReview(event.review);
       setView("result");
+
+      // Save missed questions (fire-and-forget)
+      for (const r of event.review) {
+        const chosen = myAnswersRef.current[r.index];
+        if (chosen && chosen !== r.correctChoice) {
+          addMissedQuestion({
+            questionId: r.id,
+            questionText: r.question,
+            correctAnswer: r.correctChoice,
+            chosenAnswer: chosen,
+          });
+        }
+      }
     }
   }
 
@@ -190,6 +211,8 @@ export default function Page(): JSX.Element {
   }
 
   function sendAnswer(choice: ChoiceKey): void {
+    setMyAnswers((prev) => ({ ...prev, [questionIndex]: choice }));
+    myAnswersRef.current[questionIndex] = choice;
     const payload: ClientToServerEvent = {
       type: "answer",
       index: questionIndex,
@@ -322,6 +345,7 @@ export default function Page(): JSX.Element {
               </a>
             </div>
           ))}
+
         </div>
       )}
     </main>

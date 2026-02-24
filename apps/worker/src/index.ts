@@ -358,6 +358,7 @@ export class Room implements DurableObject {
     this.state.phase = "ended";
 
     const review = this.state.questions.map((q, index) => ({
+      id: q.id,
       index,
       correctChoice: q.answer,
       explanation: q.explanation,

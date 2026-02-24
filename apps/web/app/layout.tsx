@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import AuthInit from "./AuthInit";
 
 export const metadata: Metadata = {
   title: "Minhaya 1v1",
@@ -9,7 +10,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
-      <body>{children}</body>
+      <body>
+        <AuthInit />
+        {children}
+      </body>
     </html>
   );
 }

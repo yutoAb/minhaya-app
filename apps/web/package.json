@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@minhaya/shared": "0.0.1",
+    "@supabase/supabase-js": "^2.97.0",
     "next": "14.2.32",
     "react": "18.3.1",
     "react-dom": "18.3.1"
