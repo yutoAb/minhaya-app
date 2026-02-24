@@ -6,3 +6,4 @@ out
 npm-debug.log*
 memo.md
 .env.local
+*.tsbuildinfo
