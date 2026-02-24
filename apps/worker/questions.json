@@ -148,5 +148,255 @@
     "source_url": "https://www.soumu.go.jp/senkyo/",
     "category": "選挙",
     "difficulty": 1
+  },
+  {
+    "id": "jp-constitution-2",
+    "question": "日本国憲法が公布されたのは何年？",
+    "choices": { "A": "1945年", "B": "1946年", "C": "1947年", "D": "1948年" },
+    "answer": "B",
+    "explanation": "日本国憲法は1946年11月3日に公布、1947年5月3日に施行されました。",
+    "source_url": "https://www.shugiin.go.jp/",
+    "category": "憲法",
+    "difficulty": 2
+  },
+  {
+    "id": "jp-constitution-3",
+    "question": "日本国憲法の三大原則に含まれないのは？",
+    "choices": { "A": "国民主権", "B": "基本的人権の尊重", "C": "平和主義", "D": "三権分立" },
+    "answer": "D",
+    "explanation": "三大原則は国民主権・基本的人権の尊重・平和主義です。三権分立は統治機構の仕組みであり三大原則には含まれません。",
+    "source_url": "https://www.shugiin.go.jp/",
+    "category": "憲法",
+    "difficulty": 1
+  },
+  {
+    "id": "jp-cabinet-2",
+    "question": "内閣総理大臣を指名するのはどの機関？",
+    "choices": { "A": "天皇", "B": "国会", "C": "最高裁判所", "D": "国民投票" },
+    "answer": "B",
+    "explanation": "内閣総理大臣は国会の議決で指名され、天皇が任命します。",
+    "source_url": "https://www.kantei.go.jp/",
+    "category": "内閣",
+    "difficulty": 1
+  },
+  {
+    "id": "jp-cabinet-3",
+    "question": "日本の国務大臣の過半数は何でなければならない？",
+    "choices": { "A": "国会議員", "B": "弁護士", "C": "官僚出身者", "D": "30歳以上" },
+    "answer": "A",
+    "explanation": "憲法68条により、国務大臣の過半数は国会議員から選ばれなければなりません。",
+    "source_url": "https://www.kantei.go.jp/",
+    "category": "内閣",
+    "difficulty": 2
+  },
+  {
+    "id": "jp-diet-2",
+    "question": "衆議院の定数は現在何人？",
+    "choices": { "A": "245人", "B": "465人", "C": "480人", "D": "500人" },
+    "answer": "B",
+    "explanation": "衆議院の定数は小選挙区289人、比例代表176人の計465人です。",
+    "source_url": "https://www.shugiin.go.jp/",
+    "category": "日本政治",
+    "difficulty": 2
+  },
+  {
+    "id": "jp-diet-3",
+    "question": "参議院の定数は現在何人？",
+    "choices": { "A": "200人", "B": "242人", "C": "248人", "D": "260人" },
+    "answer": "C",
+    "explanation": "参議院の定数は選挙区148人、比例代表100人の計248人です。",
+    "source_url": "https://www.sangiin.go.jp/",
+    "category": "日本政治",
+    "difficulty": 2
+  },
+  {
+    "id": "jp-diet-4",
+    "question": "国会の常会（通常国会）は毎年何月に召集される？",
+    "choices": { "A": "1月", "B": "4月", "C": "9月", "D": "10月" },
+    "answer": "A",
+    "explanation": "通常国会は毎年1月に召集され、会期は150日間です。",
+    "source_url": "https://www.shugiin.go.jp/",
+    "category": "日本政治",
+    "difficulty": 2
+  },
+  {
+    "id": "jp-local-2",
+    "question": "地方自治体の条例を制定できるのは？",
+    "choices": { "A": "都道府県知事", "B": "地方議会", "C": "総務大臣", "D": "住民投票" },
+    "answer": "B",
+    "explanation": "条例は地方議会の議決により制定されます。",
+    "source_url": "https://www.soumu.go.jp/",
+    "category": "地方自治",
+    "difficulty": 2
+  },
+  {
+    "id": "jp-local-3",
+    "question": "住民が首長のリコール（解職請求）をするために必要な署名数は有権者の何分の1以上？",
+    "choices": { "A": "50分の1", "B": "10分の1", "C": "3分の1", "D": "過半数" },
+    "answer": "C",
+    "explanation": "首長の解職請求には有権者の3分の1以上の署名が必要です。",
+    "source_url": "https://www.soumu.go.jp/",
+    "category": "地方自治",
+    "difficulty": 3
+  },
+  {
+    "id": "jp-court-2",
+    "question": "最高裁判所の裁判官の人数は長官を含めて何人？",
+    "choices": { "A": "9人", "B": "12人", "C": "15人", "D": "21人" },
+    "answer": "C",
+    "explanation": "最高裁判所は長官1人と判事14人の計15人で構成されます。",
+    "source_url": "https://www.courts.go.jp/",
+    "category": "司法",
+    "difficulty": 2
+  },
+  {
+    "id": "jp-court-3",
+    "question": "最高裁判所裁判官の国民審査はいつ行われる？",
+    "choices": { "A": "参議院選挙時", "B": "衆議院総選挙時", "C": "毎年1回", "D": "任命から10年後" },
+    "answer": "B",
+    "explanation": "最高裁判所裁判官の国民審査は衆議院議員総選挙の際に行われます。",
+    "source_url": "https://www.courts.go.jp/",
+    "category": "司法",
+    "difficulty": 2
+  },
+  {
+    "id": "jp-finance-1",
+    "question": "日本の会計年度は何月から始まる？",
+    "choices": { "A": "1月", "B": "4月", "C": "7月", "D": "10月" },
+    "answer": "B",
+    "explanation": "日本の会計年度は4月1日から翌年3月31日までです。",
+    "source_url": "https://www.mof.go.jp/",
+    "category": "財政",
+    "difficulty": 1
+  },
+  {
+    "id": "jp-finance-2",
+    "question": "国の決算を検査する機関は？",
+    "choices": { "A": "財務省", "B": "会計検査院", "C": "日本銀行", "D": "内閣法制局" },
+    "answer": "B",
+    "explanation": "会計検査院は内閣から独立した機関として国の決算を検査します。",
+    "source_url": "https://www.jbaudit.go.jp/",
+    "category": "財政",
+    "difficulty": 2
+  },
+  {
+    "id": "jp-election-3",
+    "question": "衆議院選挙の小選挙区制で、各選挙区から選ばれる議員の数は？",
+    "choices": { "A": "1人", "B": "2人", "C": "3人", "D": "選挙区による" },
+    "answer": "A",
+    "explanation": "小選挙区制では各選挙区から1人の議員が選出されます。",
+    "source_url": "https://www.soumu.go.jp/senkyo/",
+    "category": "選挙",
+    "difficulty": 1
+  },
+  {
+    "id": "jp-election-4",
+    "question": "被選挙権（衆議院議員に立候補できる年齢）は何歳以上？",
+    "choices": { "A": "18歳", "B": "20歳", "C": "25歳", "D": "30歳" },
+    "answer": "C",
+    "explanation": "衆議院議員の被選挙権は25歳以上、参議院議員は30歳以上です。",
+    "source_url": "https://www.soumu.go.jp/senkyo/",
+    "category": "選挙",
+    "difficulty": 2
+  },
+  {
+    "id": "world-un-2",
+    "question": "国連安全保障理事会の常任理事国の数は？",
+    "choices": { "A": "3か国", "B": "5か国", "C": "7か国", "D": "10か国" },
+    "answer": "B",
+    "explanation": "常任理事国はアメリカ・イギリス・フランス・ロシア・中国の5か国です。",
+    "source_url": "https://www.un.org/",
+    "category": "国際政治",
+    "difficulty": 1
+  },
+  {
+    "id": "world-un-3",
+    "question": "国連安全保障理事会の常任理事国が持つ特別な権限は？",
+    "choices": { "A": "議長権", "B": "拒否権", "C": "予算決定権", "D": "加盟承認権" },
+    "answer": "B",
+    "explanation": "常任理事国は実質事項の決定に対して拒否権（ビートー）を持ちます。",
+    "source_url": "https://www.un.org/",
+    "category": "国際政治",
+    "difficulty": 1
+  },
+  {
+    "id": "world-us-2",
+    "question": "アメリカ大統領の任期は何年？",
+    "choices": { "A": "3年", "B": "4年", "C": "5年", "D": "6年" },
+    "answer": "B",
+    "explanation": "アメリカ大統領の任期は4年で、最大2期まで務めることができます。",
+    "source_url": "https://www.whitehouse.gov/",
+    "category": "海外政治",
+    "difficulty": 1
+  },
+  {
+    "id": "world-eu-1",
+    "question": "EUの本部が置かれている都市は？",
+    "choices": { "A": "パリ", "B": "ブリュッセル", "C": "ベルリン", "D": "ジュネーブ" },
+    "answer": "B",
+    "explanation": "EU（欧州連合）の主要機関の多くはベルギーのブリュッセルに置かれています。",
+    "source_url": "https://european-union.europa.eu/",
+    "category": "国際政治",
+    "difficulty": 1
+  },
+  {
+    "id": "jp-constitution-4",
+    "question": "日本国憲法第9条が定めているのは？",
+    "choices": { "A": "表現の自由", "B": "戦争の放棄", "C": "教育を受ける権利", "D": "財産権の保障" },
+    "answer": "B",
+    "explanation": "第9条は戦争の放棄と戦力の不保持、交戦権の否認を定めています。",
+    "source_url": "https://www.shugiin.go.jp/",
+    "category": "憲法",
+    "difficulty": 1
+  },
+  {
+    "id": "jp-constitution-5",
+    "question": "日本国憲法で保障されている「表現の自由」は第何条？",
+    "choices": { "A": "第9条", "B": "第14条", "C": "第21条", "D": "第25条" },
+    "answer": "C",
+    "explanation": "第21条で集会・結社・言論・出版その他の表現の自由が保障されています。",
+    "source_url": "https://www.shugiin.go.jp/",
+    "category": "憲法",
+    "difficulty": 3
+  },
+  {
+    "id": "jp-constitution-6",
+    "question": "「健康で文化的な最低限度の生活」を保障しているのは憲法第何条？",
+    "choices": { "A": "第13条", "B": "第21条", "C": "第25条", "D": "第29条" },
+    "answer": "C",
+    "explanation": "第25条は生存権を定め、国の社会保障義務を規定しています。",
+    "source_url": "https://www.shugiin.go.jp/",
+    "category": "憲法",
+    "difficulty": 2
+  },
+  {
+    "id": "jp-party-2",
+    "question": "政党要件を満たすために必要な国会議員数は最低何人？",
+    "choices": { "A": "3人", "B": "5人", "C": "10人", "D": "20人" },
+    "answer": "B",
+    "explanation": "政党助成法では、国会議員5人以上または直近の選挙で得票率2%以上が政党の要件です。",
+    "source_url": "https://www.soumu.go.jp/",
+    "category": "政党",
+    "difficulty": 3
+  },
+  {
+    "id": "world-china-1",
+    "question": "中国の国家主席を選出する機関は？",
+    "choices": { "A": "共産党中央委員会", "B": "全国人民代表大会", "C": "国務院", "D": "人民政治協商会議" },
+    "answer": "B",
+    "explanation": "中国の国家主席は全国人民代表大会（全人代）で選出されます。",
+    "source_url": "https://www.mofa.go.jp/",
+    "category": "海外政治",
+    "difficulty": 3
+  },
+  {
+    "id": "world-france-1",
+    "question": "フランスの大統領の任期は何年？",
+    "choices": { "A": "4年", "B": "5年", "C": "6年", "D": "7年" },
+    "answer": "B",
+    "explanation": "2000年の憲法改正により、フランス大統領の任期は7年から5年に短縮されました。",
+    "source_url": "https://www.elysee.fr/",
+    "category": "海外政治",
+    "difficulty": 2
   }
 ]
