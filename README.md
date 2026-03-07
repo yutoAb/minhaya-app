@@ -46,36 +46,42 @@ NEXT_PUBLIC_WORKER_URL=http://127.0.0.1:8787 npm run dev
 
 4. ブラウザで `http://localhost:3000` を2タブで開いて 1v1 テスト
 
-## デプロイ手順（Cloudflare）
+## CI/CD
 
-### 1) Worker（API + Durable Objects）
+GitHub Actions で自動化されています。
 
-1. Cloudflare にログイン
+| ワークフロー | トリガー | 内容 |
+|---|---|---|
+| **CI** (`.github/workflows/ci.yml`) | `develop` への push / PR | typecheck |
+| **Deploy** (`.github/workflows/deploy.yml`) | `main` への push | Worker + Pages を自動デプロイ |
 
-```bash
-cd apps/worker
-npx wrangler login
+### ブランチ運用
+
+```
+feat/* → develop → main（= 本番リリース）
 ```
 
-2. デプロイ
+- `develop`: 開発統合ブランチ。push 時に CI が走る
+- `main`: 本番ブランチ。push 時に自動デプロイ
+
+### GitHub Secrets / Variables の設定
+
+リポジトリの Settings → Secrets and variables → Actions に以下を設定:
+
+**Secrets:**
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ACCOUNT_ID`
+
+**Variables:**
+- `WORKER_URL`
+- `SUPABASE_URL`
+- `SUPABASE_ANON_KEY`
+
+### 手動デプロイ
 
 ```bash
-npm run deploy
+./deploy.sh
 ```
-
-3. デプロイされた Worker URL を控える（例: `https://minhaya-worker.<subdomain>.workers.dev`）
-
-### 2) Web（Cloudflare Pages）
-
-Cloudflare Pages で GitHub 連携して `apps/web` をプロジェクト化する想定です。
-
-- Framework preset: `Next.js`
-- Root directory: `apps/web`
-- Build command: `npm run build`
-- Build output directory: `out`
-- Environment variable: `NEXT_PUBLIC_WORKER_URL=https://<worker-url>`
-
-デプロイ後、Pages の URL からアクセスして Worker と WebSocket 接続します。
 
 ## API 仕様
 
