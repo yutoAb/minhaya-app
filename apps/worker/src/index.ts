@@ -10,7 +10,7 @@ import type {
 import questionsData from "../questions.json";
 
 type Env = {
-  ROOM: DurableObjectNamespace<Room>;
+  ROOM: DurableObjectNamespace;
 };
 
 const CODE_LENGTH = 6;
