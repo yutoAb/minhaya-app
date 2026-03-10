@@ -73,6 +73,16 @@ feat/* → develop（ステージング） → main（本番リリース）
 - `develop`: 開発統合ブランチ。push 時に CI + ステージングデプロイ
 - `main`: 本番ブランチ。push 時に Worker + Pages を本番デプロイ
 
+## 管理者画面
+
+`/admin` にアクセスすると、パスワード認証付きの問題管理画面を利用できます。
+
+- 問題の追加・編集・削除が可能
+- 本番: https://minhaya-web.pages.dev/admin
+- ステージング: https://develop.minhaya-web.pages.dev/admin
+
+パスワードは環境変数 `NEXT_PUBLIC_ADMIN_PASSWORD` で設定します（ローカルは `.env.local`、CI/CD は GitHub Secrets の `ADMIN_PASSWORD`）。
+
 ### GitHub Secrets / Variables の設定
 
 リポジトリの Settings → Secrets and variables → Actions に以下を設定:
@@ -80,6 +90,7 @@ feat/* → develop（ステージング） → main（本番リリース）
 **Secrets:**
 - `CLOUDFLARE_API_TOKEN`
 - `CLOUDFLARE_ACCOUNT_ID`
+- `ADMIN_PASSWORD`
 
 **Variables:**
 - `WORKER_URL`
