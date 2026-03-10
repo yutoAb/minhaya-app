@@ -44,6 +44,7 @@ export default function Page(): JSX.Element {
 
   const wsRef = useRef<WebSocket | null>(null);
   const myAnswersRef = useRef<Record<number, ChoiceKey>>({});
+  const serverOffsetRef = useRef(0);
 
   const workerBase = useMemo(
     () => (process.env.NEXT_PUBLIC_WORKER_URL ?? defaultWorkerBase).replace(/\/$/, ""),
@@ -60,7 +61,8 @@ export default function Page(): JSX.Element {
     return workerBase;
   }, [workerBase]);
 
-  const secLeft = Math.max(0, Math.ceil((endsAtTs - nowTs) / 1000));
+  const adjustedNow = nowTs + serverOffsetRef.current;
+  const secLeft = Math.max(0, Math.ceil((endsAtTs - adjustedNow) / 1000));
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -160,6 +162,7 @@ export default function Page(): JSX.Element {
     }
 
     if (event.type === "question") {
+      serverOffsetRef.current = event.serverTs - Date.now();
       setView("match");
       setQuestionIndex(event.index);
       setQuestionText(event.question);

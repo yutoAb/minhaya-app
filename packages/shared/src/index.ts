@@ -54,6 +54,7 @@ export type ServerToClientEvent =
       question: string;
       choices: Record<ChoiceKey, string>;
       endsAtTs: number;
+      serverTs: number;
     }
   | {
       type: "locked";

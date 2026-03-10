@@ -336,6 +336,7 @@ export class Room implements DurableObject {
       question: q.question,
       choices: q.choices,
       endsAtTs: this.state.currentQuestionEndsAt,
+      serverTs: Date.now(),
     });
   }
 
