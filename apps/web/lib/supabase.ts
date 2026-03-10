@@ -64,6 +64,66 @@ export type MissedQuestion = {
   created_at: string;
 };
 
+// --- Questions CRUD (管理者用) ---
+
+export type QuestionRow = {
+  id: string;
+  question: string;
+  choices: Record<string, string>;
+  answer: string;
+  explanation: string;
+  source_url: string;
+  category: string;
+  difficulty: number;
+  created_at: string;
+  updated_at: string;
+};
+
+export type QuestionInput = {
+  id: string;
+  question: string;
+  choices: Record<string, string>;
+  answer: string;
+  explanation: string;
+  source_url: string;
+  category: string;
+  difficulty: number;
+};
+
+export async function listQuestions(): Promise<QuestionRow[]> {
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from("questions")
+    .select("*")
+    .order("created_at", { ascending: false });
+  if (error) {
+    console.error("listQuestions error:", error);
+    return [];
+  }
+  return (data ?? []) as QuestionRow[];
+}
+
+export async function addQuestion(q: QuestionInput): Promise<{ error?: string }> {
+  if (!supabase) return { error: "No client" };
+  const { error } = await supabase.from("questions").insert(q);
+  if (error) return { error: error.message };
+  return {};
+}
+
+export async function updateQuestion(id: string, q: Partial<QuestionInput>): Promise<{ error?: string }> {
+  if (!supabase) return { error: "No client" };
+  const { error } = await supabase.from("questions").update(q).eq("id", id);
+  if (error) return { error: error.message };
+  return {};
+}
+
+export async function deleteQuestion(id: string): Promise<{ error?: string }> {
+  if (!supabase) return { error: "No client" };
+  const { error } = await supabase.from("questions").delete().eq("id", id);
+  if (error) return { error: error.message };
+  return {};
+}
+
 export async function listMissedQuestions(): Promise<MissedQuestion[]> {
   if (!supabase) return [];
   try {
