@@ -14,7 +14,9 @@ type Env = {
 };
 
 const CODE_LENGTH = 6;
-const ROUND_MS = 10_000;
+const DEFAULT_ROUND_MS = 10_000;
+const MIN_ROUND_MS = 3_000;
+const MAX_ROUND_MS = 30_000;
 const QUESTIONS_PER_MATCH = 10;
 const MAX_PLAYERS = 10;
 
@@ -73,6 +75,7 @@ type RoomState = {
   questions: Question[];
   currentIndex: number;
   answersByIndex: Record<number, Record<string, { choice: ChoiceKey; latencyMs: number }>>;
+  roundMs: number;
   currentQuestionStartedAt: number;
   currentQuestionEndsAt: number;
 };
@@ -98,6 +101,7 @@ export class Room implements DurableObject {
       questions: [],
       currentIndex: 0,
       answersByIndex: {},
+      roundMs: DEFAULT_ROUND_MS,
       currentQuestionStartedAt: 0,
       currentQuestionEndsAt: 0,
     };
@@ -202,7 +206,7 @@ export class Room implements DurableObject {
     }
 
     if (event.type === "start") {
-      await this.onStart(session.playerId);
+      await this.onStart(session.playerId, event.roundSeconds);
       return;
     }
 
@@ -253,7 +257,7 @@ export class Room implements DurableObject {
     }
   }
 
-  private async onStart(playerId: string): Promise<void> {
+  private async onStart(playerId: string, roundSeconds?: number): Promise<void> {
     if (this.state.phase !== "lobby") {
       this.broadcastError("cannot_start_now");
       return;
@@ -267,6 +271,10 @@ export class Room implements DurableObject {
     if (this.state.hostId !== playerId) {
       this.broadcastError("host_only");
       return;
+    }
+
+    if (roundSeconds != null) {
+      this.state.roundMs = clamp(roundSeconds * 1000, MIN_ROUND_MS, MAX_ROUND_MS);
     }
 
     this.state.phase = "playing";
@@ -296,7 +304,8 @@ export class Room implements DurableObject {
     }
 
     const now = Date.now();
-    const latencyMs = clamp(now - this.state.currentQuestionStartedAt, 0, ROUND_MS);
+    const roundMs = this.state.roundMs;
+    const latencyMs = clamp(now - this.state.currentQuestionStartedAt, 0, roundMs);
     currentAnswers[playerId] = {
       choice: event.choice,
       latencyMs,
@@ -304,7 +313,7 @@ export class Room implements DurableObject {
 
     const q = this.state.questions[event.index];
     if (q && q.answer === event.choice) {
-      const bonus = Math.max(0, Math.floor(((ROUND_MS - latencyMs) / ROUND_MS) * 50));
+      const bonus = Math.max(0, Math.floor(((roundMs - latencyMs) / roundMs) * 50));
       this.state.scores[playerId] = (this.state.scores[playerId] ?? 0) + 100 + bonus;
     }
 
@@ -319,7 +328,7 @@ export class Room implements DurableObject {
   private async startQuestion(index: number): Promise<void> {
     this.state.currentIndex = index;
     this.state.currentQuestionStartedAt = Date.now();
-    this.state.currentQuestionEndsAt = this.state.currentQuestionStartedAt + ROUND_MS;
+    this.state.currentQuestionEndsAt = this.state.currentQuestionStartedAt + this.state.roundMs;
     await this.ctx.storage.setAlarm(this.state.currentQuestionEndsAt);
 
     const q = this.state.questions[index];

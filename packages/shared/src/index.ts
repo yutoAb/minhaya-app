@@ -26,6 +26,7 @@ export type ClientToServerEvent =
     }
   | {
       type: "start";
+      roundSeconds?: number;
     }
   | {
       type: "answer";

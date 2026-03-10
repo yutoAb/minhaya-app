@@ -41,6 +41,7 @@ export default function Page(): JSX.Element {
   const [myAnswers, setMyAnswers] = useState<Record<number, ChoiceKey>>({});
   const [missedHistory, setMissedHistory] = useState<MissedQuestion[]>([]);
   const [showMissedHistory, setShowMissedHistory] = useState(false);
+  const [roundSeconds, setRoundSeconds] = useState(10);
 
   const wsRef = useRef<WebSocket | null>(null);
   const myAnswersRef = useRef<Record<number, ChoiceKey>>({});
@@ -209,7 +210,7 @@ export default function Page(): JSX.Element {
   }
 
   function sendStart(): void {
-    const payload: ClientToServerEvent = { type: "start" };
+    const payload: ClientToServerEvent = { type: "start", roundSeconds };
     wsRef.current?.send(JSON.stringify(payload));
   }
 
@@ -300,6 +301,22 @@ export default function Page(): JSX.Element {
               <span className="badge">{p.playerId === hostId ? "HOST" : "GUEST"}</span>
             </div>
           ))}
+
+          {selfId === hostId && (
+            <div style={{ marginTop: 16 }}>
+              <label>
+                制限時間: {roundSeconds}秒
+                <input
+                  type="range"
+                  min={3}
+                  max={30}
+                  value={roundSeconds}
+                  onChange={(e) => setRoundSeconds(Number(e.target.value))}
+                  style={{ width: "100%", marginTop: 4 }}
+                />
+              </label>
+            </div>
+          )}
 
           {players.length >= 2 && selfId === hostId && (
             <button className="primary" onClick={sendStart} style={{ marginTop: 16 }}>
