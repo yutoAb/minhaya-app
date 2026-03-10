@@ -7,10 +7,10 @@ import type {
   Question,
   ServerToClientEvent,
 } from "@minhaya/shared";
-import questionsData from "../questions.json";
-
 type Env = {
   ROOM: DurableObjectNamespace;
+  SUPABASE_URL: string;
+  SUPABASE_ANON_KEY: string;
 };
 
 const CODE_LENGTH = 6;
@@ -87,11 +87,13 @@ type Session = {
 
 export class Room implements DurableObject {
   private readonly ctx: DurableObjectState;
+  private readonly env: Env;
   private readonly sessions = new Set<Session>();
   private state: RoomState;
 
-  constructor(ctx: DurableObjectState) {
+  constructor(ctx: DurableObjectState, env: Env) {
     this.ctx = ctx;
+    this.env = env;
     this.state = {
       code: "",
       phase: "lobby",
@@ -277,8 +279,14 @@ export class Room implements DurableObject {
       this.state.roundMs = clamp(roundSeconds * 1000, MIN_ROUND_MS, MAX_ROUND_MS);
     }
 
+    const allQuestions = await this.fetchQuestions();
+    if (allQuestions.length === 0) {
+      this.broadcastError("no_questions_available");
+      return;
+    }
+
     this.state.phase = "playing";
-    this.state.questions = pickQuestions(questionsData as Question[], QUESTIONS_PER_MATCH);
+    this.state.questions = pickQuestions(allQuestions, QUESTIONS_PER_MATCH);
     this.state.currentIndex = 0;
     this.state.answersByIndex = {};
     this.state.scores = Object.fromEntries(this.state.players.map((p) => [p.playerId, 0]));
@@ -433,6 +441,21 @@ export class Room implements DurableObject {
         // ignore
       }
     }
+  }
+
+  private async fetchQuestions(): Promise<Question[]> {
+    const url = `${this.env.SUPABASE_URL}/rest/v1/questions?select=id,question,choices,answer,explanation,source_url,category,difficulty`;
+    const res = await fetch(url, {
+      headers: {
+        apikey: this.env.SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${this.env.SUPABASE_ANON_KEY}`,
+      },
+    });
+    if (!res.ok) {
+      console.error("Failed to fetch questions:", res.status);
+      return [];
+    }
+    return (await res.json()) as Question[];
   }
 
   private async persist(): Promise<void> {

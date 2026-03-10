@@ -7,6 +7,10 @@ bindings = [
   { name = "ROOM", class_name = "Room" }
 ]
 
+[vars]
+SUPABASE_URL = "https://anghhjprwttyxytaccjk.supabase.co"
+SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFuZ2hoanByd3R0eXh5dGFjY2prIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5MDk5ODMsImV4cCI6MjA4NzQ4NTk4M30.0erT7dsR5modVvsYZ-9U4CaVz76yevxx-zPGlrzAmhU"
+
 [[migrations]]
 new_sqlite_classes = ["Room"]
 tag = "v1"
