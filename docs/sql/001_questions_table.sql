@@ -8,8 +8,22 @@ create table public.questions (
   source_url text not null default '',
   category text not null default '',
   difficulty smallint not null default 1 check (difficulty between 1 and 5),
-  created_at timestamptz not null default now()
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
 );
+
+-- updated_at 自動更新トリガー
+create or replace function update_updated_at()
+returns trigger as $$
+begin
+  new.updated_at = now();
+  return new;
+end;
+$$ language plpgsql;
+
+create trigger questions_updated_at
+before update on public.questions
+for each row execute function update_updated_at();
 
 -- インデックス
 create index questions_difficulty_idx on public.questions(difficulty);
