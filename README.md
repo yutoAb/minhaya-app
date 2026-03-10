@@ -46,6 +46,14 @@ NEXT_PUBLIC_WORKER_URL=http://127.0.0.1:8787 npm run dev
 
 4. ブラウザで `http://localhost:3000` を2タブで開いて 1v1 テスト
 
+## 環境
+
+| 環境 | URL | ブランチ |
+|---|---|---|
+| **本番** | https://minhaya-web.pages.dev | `main` |
+| **ステージング** | https://develop.minhaya-web.pages.dev | `develop` |
+| **Worker** | https://minhaya-worker.yuto27abe.workers.dev | `main` |
+
 ## CI/CD
 
 GitHub Actions で自動化されています。
@@ -53,16 +61,17 @@ GitHub Actions で自動化されています。
 | ワークフロー | トリガー | 内容 |
 |---|---|---|
 | **CI** (`.github/workflows/ci.yml`) | `develop` への push / PR | typecheck |
-| **Deploy** (`.github/workflows/deploy.yml`) | `main` への push | Worker + Pages を自動デプロイ |
+| **Deploy** (`.github/workflows/deploy.yml`) | `main` への push | Worker + Pages を本番デプロイ |
+| **Deploy** (`.github/workflows/deploy.yml`) | `develop` への push | Pages をステージングデプロイ |
 
 ### ブランチ運用
 
 ```
-feat/* → develop → main（= 本番リリース）
+feat/* → develop（ステージング） → main（本番リリース）
 ```
 
-- `develop`: 開発統合ブランチ。push 時に CI が走る
-- `main`: 本番ブランチ。push 時に自動デプロイ
+- `develop`: 開発統合ブランチ。push 時に CI + ステージングデプロイ
+- `main`: 本番ブランチ。push 時に Worker + Pages を本番デプロイ
 
 ### GitHub Secrets / Variables の設定
 
