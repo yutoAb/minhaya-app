@@ -235,18 +235,26 @@ export default function AdminPage(): JSX.Element {
 
       <h2 style={{ marginTop: 24 }}>問題一覧</h2>
       {questions.map((q) => (
-        <div key={q.id} className="card" style={{ marginTop: 8 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <strong>{q.id}</strong>
+        <div key={q.id} className="card" style={{ marginTop: 12 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+            <strong style={{ fontSize: "1.1em" }}>{q.id}</strong>
             <span style={{ fontSize: "0.8em", opacity: 0.7 }}>
-              難易度{q.difficulty} / {q.category}
+              難易度 {q.difficulty} / {q.category}
             </span>
           </div>
-          <p>{q.question}</p>
-          <p style={{ fontSize: "0.9em" }}>
-            A: {q.choices.A} / B: {q.choices.B} / C: {q.choices.C} / D: {q.choices.D}
-          </p>
-          <p style={{ fontSize: "0.9em" }}>正解: {q.answer}</p>
+          <p style={{ marginBottom: 8, lineHeight: 1.5 }}>{q.question}</p>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px 16px", fontSize: "0.9em", marginBottom: 8 }}>
+            {(["A", "B", "C", "D"] as const).map((k) => (
+              <div key={k} style={{ fontWeight: q.answer === k ? "bold" : "normal", color: q.answer === k ? "#2ecc71" : "inherit" }}>
+                {q.answer === k ? "\u25CB " : "\u3000 "}{k}: {q.choices[k]}
+              </div>
+            ))}
+          </div>
+          {q.explanation && (
+            <p style={{ fontSize: "0.85em", opacity: 0.8, marginBottom: 4 }}>
+              {q.explanation}
+            </p>
+          )}
           <div style={{ marginTop: 8, display: "flex", gap: 8 }}>
             <button onClick={() => startEdit(q)}>編集</button>
             <button onClick={() => handleDelete(q.id)} style={{ color: "#e74c3c" }}>
