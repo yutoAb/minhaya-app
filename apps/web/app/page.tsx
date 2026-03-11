@@ -272,15 +272,35 @@ export default function Page(): JSX.Element {
             <div style={{ marginTop: 12 }}>
               <h3>間違えた問題の履歴</h3>
               {missedHistory.length === 0 && <p>まだ記録がありません</p>}
-              {missedHistory.map((m) => (
-                <div key={m.id} className="card" style={{ marginTop: 8 }}>
-                  <strong>{m.question_text}</strong>
-                  <p>正解: {m.correct_answer} / あなたの回答: {m.chosen_answer}</p>
-                  <p style={{ fontSize: "0.8em", opacity: 0.7 }}>
-                    {new Date(m.created_at).toLocaleString("ja-JP")}
-                  </p>
-                </div>
-              ))}
+              {missedHistory.map((m) => {
+                const choices = m.questions?.choices;
+                return (
+                  <div key={m.id} className="card" style={{ marginTop: 8 }}>
+                    <strong>{m.question_text}</strong>
+                    {choices && (
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2px 12px", fontSize: "0.9em", marginTop: 6 }}>
+                        {(["A", "B", "C", "D"] as const).map((k) => (
+                          <div
+                            key={k}
+                            style={{
+                              color: k === m.correct_answer ? "#2ecc71" : k === m.chosen_answer ? "#e74c3c" : "inherit",
+                              fontWeight: k === m.correct_answer || k === m.chosen_answer ? "bold" : "normal",
+                            }}
+                          >
+                            {k}: {choices[k]}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <p style={{ fontSize: "0.85em", marginTop: 6 }}>
+                      正解: {m.correct_answer}{choices ? ` (${choices[m.correct_answer]})` : ""} / あなたの回答: {m.chosen_answer}{choices ? ` (${choices[m.chosen_answer]})` : ""}
+                    </p>
+                    <p style={{ fontSize: "0.8em", opacity: 0.7 }}>
+                      {new Date(m.created_at).toLocaleString("ja-JP")}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>

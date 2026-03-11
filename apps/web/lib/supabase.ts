@@ -62,6 +62,7 @@ export type MissedQuestion = {
   correct_answer: string;
   chosen_answer: string;
   created_at: string;
+  questions: { choices: Record<string, string> } | null;
 };
 
 // --- Questions CRUD (管理者用) ---
@@ -137,7 +138,7 @@ export async function listMissedQuestions(): Promise<MissedQuestion[]> {
   try {
     const { data, error } = await supabase
       .from("missed_questions")
-      .select("*")
+      .select("*, questions(choices)")
       .order("created_at", { ascending: false });
 
     if (error) {
