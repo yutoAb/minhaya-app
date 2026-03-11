@@ -75,6 +75,7 @@ export type QuestionRow = {
   source_url: string;
   category: string;
   difficulty: number;
+  is_active: boolean;
   created_at: string;
   updated_at: string;
 };
@@ -113,6 +114,13 @@ export async function addQuestion(q: QuestionInput): Promise<{ error?: string }>
 export async function updateQuestion(id: string, q: Partial<QuestionInput>): Promise<{ error?: string }> {
   if (!supabase) return { error: "No client" };
   const { error } = await supabase.from("questions").update(q).eq("id", id);
+  if (error) return { error: error.message };
+  return {};
+}
+
+export async function toggleQuestionActive(id: string, isActive: boolean): Promise<{ error?: string }> {
+  if (!supabase) return { error: "No client" };
+  const { error } = await supabase.from("questions").update({ is_active: isActive }).eq("id", id);
   if (error) return { error: error.message };
   return {};
 }

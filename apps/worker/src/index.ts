@@ -444,7 +444,7 @@ export class Room implements DurableObject {
   }
 
   private async fetchQuestions(): Promise<Question[]> {
-    const url = `${this.env.SUPABASE_URL}/rest/v1/questions?select=id,question,choices,answer,explanation,source_url,category,difficulty`;
+    const url = `${this.env.SUPABASE_URL}/rest/v1/questions?select=id,question,choices,answer,explanation,source_url,category,difficulty&is_active=eq.true`;
     const res = await fetch(url, {
       headers: {
         apikey: this.env.SUPABASE_ANON_KEY,
