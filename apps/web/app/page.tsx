@@ -338,7 +338,7 @@ export default function Page(): JSX.Element {
             </div>
           )}
 
-          {players.length >= 2 && selfId === hostId && (
+          {selfId === hostId && (
             <button className="primary" onClick={sendStart} style={{ marginTop: 16 }}>
               Start
             </button>
@@ -387,11 +387,13 @@ export default function Page(): JSX.Element {
       {view === "result" && (
         <div className="card">
           <h2>
-            {winnerId === null
-              ? "引き分け"
-              : winnerId === selfId
-                ? "あなたの勝ち"
-                : "あなたの負け"}
+            {players.length <= 1
+              ? "結果"
+              : winnerId === null
+                ? "引き分け"
+                : winnerId === selfId
+                  ? "あなたの勝ち"
+                  : "あなたの負け"}
           </h2>
           {players.map((p) => (
             <p key={p.playerId}>

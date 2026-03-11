@@ -254,9 +254,7 @@ export class Room implements DurableObject {
     await this.persist();
     this.broadcastLobby();
 
-    if (this.state.players.length >= 2) {
-      this.broadcastReady();
-    }
+    this.broadcastReady();
   }
 
   private async onStart(playerId: string, roundSeconds?: number): Promise<void> {
@@ -265,7 +263,7 @@ export class Room implements DurableObject {
       return;
     }
 
-    if (this.state.players.length < 2 || !this.state.hostId) {
+    if (this.state.players.length < 1 || !this.state.hostId) {
       this.broadcastError("not_ready");
       return;
     }
