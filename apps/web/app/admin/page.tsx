@@ -6,6 +6,7 @@ import {
   addQuestion,
   updateQuestion,
   deleteQuestion,
+  toggleQuestionActive,
   type QuestionRow,
   type QuestionInput,
 } from "@/lib/supabase";
@@ -140,7 +141,7 @@ export default function AdminPage(): JSX.Element {
 
   return (
     <main>
-      <h1>問題管理（{questions.length}問）</h1>
+      <h1>問題管理（{questions.filter((q) => q.is_active).length}/{questions.length}問 有効）</h1>
       {message && <p className="error">{message}</p>}
 
       <div className="card" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -246,12 +247,15 @@ export default function AdminPage(): JSX.Element {
 
       <h2 style={{ marginTop: 24 }}>問題一覧</h2>
       {questions.map((q) => (
-        <div key={q.id} className="card" style={{ marginTop: 12 }}>
+        <div key={q.id} className="card" style={{ marginTop: 12, opacity: q.is_active ? 1 : 0.5 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
             <strong style={{ fontSize: "1.1em" }}>{q.id}</strong>
-            <span style={{ fontSize: "0.8em", opacity: 0.7 }}>
-              難易度 {q.difficulty} / {q.category}
-            </span>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              {!q.is_active && <span style={{ fontSize: "0.8em", color: "#e74c3c" }}>無効</span>}
+              <span style={{ fontSize: "0.8em", opacity: 0.7 }}>
+                難易度 {q.difficulty} / {q.category}
+              </span>
+            </div>
           </div>
           <p style={{ marginBottom: 8, lineHeight: 1.5 }}>{q.question}</p>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px 16px", fontSize: "0.9em", marginBottom: 8 }}>
@@ -266,7 +270,17 @@ export default function AdminPage(): JSX.Element {
               {q.explanation}
             </p>
           )}
-          <div style={{ marginTop: 8, display: "flex", gap: 8 }}>
+          <div style={{ marginTop: 8, display: "flex", gap: 8, alignItems: "center" }}>
+            <button
+              onClick={async () => {
+                const { error } = await toggleQuestionActive(q.id, !q.is_active);
+                if (error) setMessage(`切替失敗: ${error}`);
+                else await loadQuestions();
+              }}
+              style={{ color: q.is_active ? "#e67e22" : "#2ecc71" }}
+            >
+              {q.is_active ? "無効にする" : "有効にする"}
+            </button>
             <button onClick={() => startEdit(q)}>編集</button>
             <button onClick={() => handleDelete(q.id)} style={{ color: "#e74c3c" }}>
               削除
