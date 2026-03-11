@@ -143,89 +143,100 @@ export default function AdminPage(): JSX.Element {
       <h1>問題管理（{questions.length}問）</h1>
       {message && <p className="error">{message}</p>}
 
-      <div className="card">
+      <div className="card" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         <h2>{editingId ? `編集: ${editingId}` : "新規追加"}</h2>
 
-        <label>
-          ID
+        <div>
+          <div style={{ fontSize: "0.85em", marginBottom: 4, opacity: 0.8 }}>ID</div>
           <input
             value={form.id}
             onChange={(e) => setForm({ ...form, id: e.target.value })}
             disabled={!!editingId}
             placeholder="例: jp-new-1"
+            style={{ width: "100%", boxSizing: "border-box" }}
           />
-        </label>
+        </div>
 
-        <label style={{ marginTop: 8 }}>
-          問題文
+        <div>
+          <div style={{ fontSize: "0.85em", marginBottom: 4, opacity: 0.8 }}>問題文</div>
           <textarea
             value={form.question}
             onChange={(e) => setForm({ ...form, question: e.target.value })}
-            rows={2}
-            style={{ width: "100%" }}
+            rows={3}
+            style={{ width: "100%", boxSizing: "border-box" }}
           />
-        </label>
+        </div>
 
-        {(["A", "B", "C", "D"] as const).map((k) => (
-          <label key={k} style={{ marginTop: 4 }}>
-            選択肢 {k}
-            <input
-              value={form.choices[k] ?? ""}
-              onChange={(e) =>
-                setForm({ ...form, choices: { ...form.choices, [k]: e.target.value } })
-              }
-            />
-          </label>
-        ))}
+        <div>
+          <div style={{ fontSize: "0.85em", marginBottom: 4, opacity: 0.8 }}>選択肢</div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+            {(["A", "B", "C", "D"] as const).map((k) => (
+              <div key={k}>
+                <span style={{ fontSize: "0.85em", fontWeight: "bold" }}>{k}</span>
+                <input
+                  value={form.choices[k] ?? ""}
+                  onChange={(e) =>
+                    setForm({ ...form, choices: { ...form.choices, [k]: e.target.value } })
+                  }
+                  style={{ width: "100%", boxSizing: "border-box", marginTop: 2 }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
 
-        <label style={{ marginTop: 8 }}>
-          正解
-          <select value={form.answer} onChange={(e) => setForm({ ...form, answer: e.target.value })}>
+        <div>
+          <div style={{ fontSize: "0.85em", marginBottom: 4, opacity: 0.8 }}>正解</div>
+          <select value={form.answer} onChange={(e) => setForm({ ...form, answer: e.target.value })} style={{ width: "100%" }}>
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="C">C</option>
             <option value="D">D</option>
           </select>
-        </label>
+        </div>
 
-        <label style={{ marginTop: 8 }}>
-          解説
+        <div>
+          <div style={{ fontSize: "0.85em", marginBottom: 4, opacity: 0.8 }}>解説</div>
           <textarea
             value={form.explanation}
             onChange={(e) => setForm({ ...form, explanation: e.target.value })}
-            rows={2}
-            style={{ width: "100%" }}
+            rows={3}
+            style={{ width: "100%", boxSizing: "border-box" }}
           />
-        </label>
+        </div>
 
-        <label style={{ marginTop: 8 }}>
-          出典URL
-          <input
-            value={form.source_url}
-            onChange={(e) => setForm({ ...form, source_url: e.target.value })}
-          />
-        </label>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+          <div>
+            <div style={{ fontSize: "0.85em", marginBottom: 4, opacity: 0.8 }}>出典URL</div>
+            <input
+              value={form.source_url}
+              onChange={(e) => setForm({ ...form, source_url: e.target.value })}
+              style={{ width: "100%", boxSizing: "border-box" }}
+            />
+          </div>
+          <div>
+            <div style={{ fontSize: "0.85em", marginBottom: 4, opacity: 0.8 }}>カテゴリ</div>
+            <input
+              value={form.category}
+              onChange={(e) => setForm({ ...form, category: e.target.value })}
+              style={{ width: "100%", boxSizing: "border-box" }}
+            />
+          </div>
+        </div>
 
-        <label style={{ marginTop: 8 }}>
-          カテゴリ
-          <input
-            value={form.category}
-            onChange={(e) => setForm({ ...form, category: e.target.value })}
-          />
-        </label>
-
-        <label style={{ marginTop: 8 }}>
-          難易度 ({form.difficulty})
+        <div>
+          <div style={{ fontSize: "0.85em", marginBottom: 4, opacity: 0.8 }}>難易度 ({form.difficulty})</div>
           <input
             type="range"
             min={1}
             max={5}
             value={form.difficulty}
             onChange={(e) => setForm({ ...form, difficulty: Number(e.target.value) })}
+            style={{ width: "100%" }}
           />
-        </label>
+        </div>
 
-        <div style={{ marginTop: 12, display: "flex", gap: 8 }}>
+        <div style={{ display: "flex", gap: 8 }}>
           <button className="primary" onClick={handleSubmit} disabled={loading}>
             {editingId ? "更新" : "追加"}
           </button>
@@ -235,18 +246,26 @@ export default function AdminPage(): JSX.Element {
 
       <h2 style={{ marginTop: 24 }}>問題一覧</h2>
       {questions.map((q) => (
-        <div key={q.id} className="card" style={{ marginTop: 8 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <strong>{q.id}</strong>
+        <div key={q.id} className="card" style={{ marginTop: 12 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+            <strong style={{ fontSize: "1.1em" }}>{q.id}</strong>
             <span style={{ fontSize: "0.8em", opacity: 0.7 }}>
-              難易度{q.difficulty} / {q.category}
+              難易度 {q.difficulty} / {q.category}
             </span>
           </div>
-          <p>{q.question}</p>
-          <p style={{ fontSize: "0.9em" }}>
-            A: {q.choices.A} / B: {q.choices.B} / C: {q.choices.C} / D: {q.choices.D}
-          </p>
-          <p style={{ fontSize: "0.9em" }}>正解: {q.answer}</p>
+          <p style={{ marginBottom: 8, lineHeight: 1.5 }}>{q.question}</p>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px 16px", fontSize: "0.9em", marginBottom: 8 }}>
+            {(["A", "B", "C", "D"] as const).map((k) => (
+              <div key={k} style={{ fontWeight: q.answer === k ? "bold" : "normal", color: q.answer === k ? "#2ecc71" : "inherit" }}>
+                {q.answer === k ? "\u25CB " : "\u3000 "}{k}: {q.choices[k]}
+              </div>
+            ))}
+          </div>
+          {q.explanation && (
+            <p style={{ fontSize: "0.85em", opacity: 0.8, marginBottom: 4 }}>
+              {q.explanation}
+            </p>
+          )}
           <div style={{ marginTop: 8, display: "flex", gap: 8 }}>
             <button onClick={() => startEdit(q)}>編集</button>
             <button onClick={() => handleDelete(q.id)} style={{ color: "#e74c3c" }}>
