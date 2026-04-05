@@ -437,18 +437,26 @@ export default function Page(): JSX.Element {
             </p>
           ))}
           <h3>解説</h3>
-          {review.map((r) => (
-            <div key={r.index} className="card">
-              <strong>
-                Q{r.index + 1}: {r.question}
-              </strong>
-              <p>正解: {r.correctChoice}</p>
-              <p>{r.explanation}</p>
-              <a href={r.source_url} target="_blank" rel="noreferrer">
-                出典
-              </a>
-            </div>
-          ))}
+          {review.map((r) => {
+            const myChoice = myAnswers[r.index];
+            const isCorrect = myChoice === r.correctChoice;
+            return (
+              <div key={r.index} className="card">
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <strong>Q{r.index + 1}: {r.question}</strong>
+                  <span style={{ fontSize: "1.2em" }}>{myChoice ? (isCorrect ? "○" : "×") : "−"}</span>
+                </div>
+                <p style={{ color: isCorrect ? "#2ecc71" : "#e74c3c" }}>
+                  あなたの回答: {myChoice ? `${myChoice} (${r.choices[myChoice]})` : "未回答"}
+                  {" / "}正解: {r.correctChoice} ({r.choices[r.correctChoice]})
+                </p>
+                <p>{r.explanation}</p>
+                <a href={r.source_url} target="_blank" rel="noreferrer">
+                  出典
+                </a>
+              </div>
+            );
+          })}
 
           <button
             className="primary"

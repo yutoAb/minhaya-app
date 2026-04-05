@@ -394,6 +394,7 @@ export class Room implements DurableObject {
       id: q.id,
       index,
       correctChoice: q.answer,
+      choices: q.choices,
       explanation: q.explanation,
       source_url: q.source_url,
       question: q.question,
