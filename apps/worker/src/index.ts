@@ -19,6 +19,7 @@ const MIN_ROUND_MS = 3_000;
 const MAX_ROUND_MS = 30_000;
 const QUESTIONS_PER_MATCH = 10;
 const MAX_PLAYERS = 10;
+const FEEDBACK_MS = 3_000;
 
 const app = new Hono<{ Bindings: Env }>();
 
@@ -360,15 +361,30 @@ export class Room implements DurableObject {
       return;
     }
 
-    this.broadcast({ type: "score", scores: this.state.scores });
+    const q = this.state.questions[this.state.currentIndex];
+    this.broadcast({
+      type: "score",
+      scores: this.state.scores,
+      index: this.state.currentIndex,
+      correctChoice: q.answer,
+      explanation: q.explanation,
+    });
 
     const nextIndex = this.state.currentIndex + 1;
     if (nextIndex >= this.state.questions.length || nextIndex >= QUESTIONS_PER_MATCH) {
+      // Wait for feedback display, then end
+      await this.delay(FEEDBACK_MS);
       await this.endGame();
       return;
     }
 
+    // Wait for feedback display, then next question
+    await this.delay(FEEDBACK_MS);
     await this.startQuestion(nextIndex);
+  }
+
+  private delay(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   private async endGame(): Promise<void> {

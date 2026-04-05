@@ -42,6 +42,11 @@ export default function Page(): JSX.Element {
   const [missedHistory, setMissedHistory] = useState<MissedQuestion[]>([]);
   const [showMissedHistory, setShowMissedHistory] = useState(false);
   const [roundSeconds, setRoundSeconds] = useState(10);
+  const [feedback, setFeedback] = useState<{
+    correctChoice: ChoiceKey;
+    explanation: string;
+    receivedAt: number;
+  } | null>(null);
 
   const wsRef = useRef<WebSocket | null>(null);
   const myAnswersRef = useRef<Record<number, ChoiceKey>>({});
@@ -169,6 +174,7 @@ export default function Page(): JSX.Element {
       setQuestionText(event.question);
       setChoices(event.choices);
       setEndsAtTs(event.endsAtTs);
+      setFeedback(null);
       return;
     }
 
@@ -185,6 +191,11 @@ export default function Page(): JSX.Element {
 
     if (event.type === "score") {
       setScores(event.scores);
+      setFeedback({
+        correctChoice: event.correctChoice,
+        explanation: event.explanation,
+        receivedAt: Date.now(),
+      });
       return;
     }
 
@@ -352,27 +363,52 @@ export default function Page(): JSX.Element {
             <span>
               Q{questionIndex + 1} / 10
             </span>
-            <span className="timer">{secLeft}s</span>
+            {feedback
+              ? <span className="timer">次の問題まで {Math.max(1, Math.ceil((3000 - (nowTs - feedback.receivedAt)) / 1000))}s</span>
+              : <span className="timer">{secLeft}s</span>
+            }
           </div>
           <h2>{questionText}</h2>
           <div className="row" style={{ flexDirection: "column", alignItems: "stretch" }}>
-            {(["A", "B", "C", "D"] as ChoiceKey[]).map((k) => (
-              <button
-                key={k}
-                className="choice"
-                onClick={() => sendAnswer(k)}
-                disabled={meLocked}
-              >
-                {k}. {choices[k]}
-              </button>
-            ))}
+            {(["A", "B", "C", "D"] as ChoiceKey[]).map((k) => {
+              const myChoice = myAnswers[questionIndex];
+              const isCorrect = feedback && k === feedback.correctChoice;
+              const isWrong = feedback && k === myChoice && myChoice !== feedback.correctChoice;
+              return (
+                <button
+                  key={k}
+                  className="choice"
+                  onClick={() => sendAnswer(k)}
+                  disabled={meLocked || !!feedback}
+                  style={{
+                    ...(isCorrect ? { background: "#2ecc71", color: "#fff", borderColor: "#2ecc71" } : {}),
+                    ...(isWrong ? { background: "#e74c3c", color: "#fff", borderColor: "#e74c3c" } : {}),
+                  }}
+                >
+                  {k}. {choices[k]}
+                </button>
+              );
+            })}
           </div>
-          <p>{meLocked ? "あなたは回答ロック済み" : "回答してください（最初の回答でロック）"}</p>
-          <p>
-            相手: {(lockedByQuestion[questionIndex] ?? []).filter((id) => id !== selfId).length > 0
-              ? "回答済み"
-              : "未回答"}
-          </p>
+          {feedback ? (
+            <div style={{ marginTop: 8 }}>
+              <p style={{ fontWeight: "bold", color: myAnswers[questionIndex] === feedback.correctChoice ? "#2ecc71" : "#e74c3c" }}>
+                {myAnswers[questionIndex] === feedback.correctChoice ? "○ 正解！" : myAnswers[questionIndex] ? "× 不正解" : "未回答"}
+              </p>
+              <p style={{ fontSize: "0.9em", marginTop: 4 }}>{feedback.explanation}</p>
+            </div>
+          ) : (
+            <>
+              <p>{meLocked ? "あなたは回答ロック済み" : "回答してください（最初の回答でロック）"}</p>
+              {players.length > 1 && (
+                <p>
+                  相手: {(lockedByQuestion[questionIndex] ?? []).filter((id) => id !== selfId).length > 0
+                    ? "回答済み"
+                    : "未回答"}
+                </p>
+              )}
+            </>
+          )}
           <div className="card">
             <strong>Scores</strong>
             {players.map((p) => (
