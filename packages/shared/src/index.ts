@@ -65,6 +65,9 @@ export type ServerToClientEvent =
   | {
       type: "score";
       scores: Record<string, number>;
+      index: number;
+      correctChoice: ChoiceKey;
+      explanation: string;
     }
   | {
       type: "ended";
