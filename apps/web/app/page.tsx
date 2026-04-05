@@ -241,42 +241,52 @@ export default function Page(): JSX.Element {
 
   return (
     <main>
-      <h1>みんはや政治クイズ 1v1 MVP</h1>
       {error && <p className="error">{error}</p>}
 
       {view === "home" && (
-        <div className="card">
-          <div className="row">
-            <input
-              placeholder="表示名"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              maxLength={20}
-            />
+        <div>
+          <div className="hero">
+            <h1 className="hero-title">PoliQuiz</h1>
+            <p className="hero-sub">政治クイズバトル</p>
           </div>
-          <div className="row" style={{ marginTop: 12 }}>
-            <button className="primary" onClick={createRoom}>
-              ルーム作成
+
+          <div className="card" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            <div>
+              <div style={{ fontSize: "0.85em", marginBottom: 4, opacity: 0.8 }}>表示名</div>
+              <input
+                placeholder="あなたの名前"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                maxLength={20}
+                style={{ width: "100%", boxSizing: "border-box" }}
+              />
+            </div>
+            <button className="primary" onClick={createRoom} style={{ width: "100%" }}>
+              ルームを作成する
             </button>
+            <div className="divider">または</div>
+            <div style={{ display: "flex", gap: 8 }}>
+              <input
+                placeholder="招待コード (6桁)"
+                value={joinCode}
+                onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
+                maxLength={6}
+                style={{ flex: 1 }}
+              />
+              <button onClick={joinRoom}>参加</button>
+            </div>
           </div>
-          <div className="row" style={{ marginTop: 12 }}>
-            <input
-              placeholder="招待コード (6桁)"
-              value={joinCode}
-              onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
-              maxLength={6}
-            />
-            <button onClick={joinRoom}>コードで参加</button>
-          </div>
-          <div className="row" style={{ marginTop: 16 }}>
+
+          <div style={{ marginTop: 12, textAlign: "center" }}>
             <button
+              className="link-btn"
               onClick={async () => {
                 const data = await listMissedQuestions();
                 setMissedHistory(data);
                 setShowMissedHistory((prev) => !prev);
               }}
             >
-              {showMissedHistory ? "履歴を閉じる" : "過去の履歴を見る"}
+              {showMissedHistory ? "履歴を閉じる" : "間違えた問題の履歴を見る"}
             </button>
           </div>
           {showMissedHistory && (
