@@ -77,6 +77,7 @@ export type ServerToClientEvent =
         id: string;
         index: number;
         correctChoice: ChoiceKey;
+        choices: Record<ChoiceKey, string>;
         explanation: string;
         source_url: string;
         question: string;
