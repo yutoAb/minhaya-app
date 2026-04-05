@@ -41,6 +41,7 @@ export default function Page(): JSX.Element {
   const [myAnswers, setMyAnswers] = useState<Record<number, ChoiceKey>>({});
   const [missedHistory, setMissedHistory] = useState<MissedQuestion[]>([]);
   const [showMissedHistory, setShowMissedHistory] = useState(false);
+  const [showHowTo, setShowHowTo] = useState(false);
   const [roundSeconds, setRoundSeconds] = useState(10);
   const [feedback, setFeedback] = useState<{
     correctChoice: ChoiceKey;
@@ -277,7 +278,10 @@ export default function Page(): JSX.Element {
             </div>
           </div>
 
-          <div style={{ marginTop: 12, textAlign: "center" }}>
+          <div style={{ marginTop: 12, textAlign: "center", display: "flex", justifyContent: "center", gap: 16 }}>
+            <button className="link-btn" onClick={() => setShowHowTo(true)}>
+              遊び方
+            </button>
             <button
               className="link-btn"
               onClick={async () => {
@@ -479,6 +483,25 @@ export default function Page(): JSX.Element {
           >
             ホームに戻る
           </button>
+        </div>
+      )}
+      {showHowTo && (
+        <div className="modal-overlay" onClick={() => setShowHowTo(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <h2>遊び方</h2>
+            <ol style={{ paddingLeft: 20, lineHeight: 1.8 }}>
+              <li>表示名を入力して「ルームを作成する」をタップ</li>
+              <li>表示された招待コードを友達にシェア（1人でもプレイ可能）</li>
+              <li>全員が参加したらホストが「Start」をタップ</li>
+              <li>四択の政治クイズが10問出題されます</li>
+              <li>早く正解するほど高スコア！</li>
+              <li>回答ごとに○×と解説が表示されます</li>
+              <li>全問終了後、結果と詳しい解説を確認できます</li>
+            </ol>
+            <button className="primary" onClick={() => setShowHowTo(false)} style={{ width: "100%", marginTop: 12 }}>
+              閉じる
+            </button>
+          </div>
         </div>
       )}
     </main>
